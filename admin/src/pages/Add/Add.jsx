@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import "./Add.css";
 import { assets } from "../../assets/assets";
 import axios from "axios";
+import { toast } from "react-toastify";
 
-const Add = () => {
-  const url = "http://localhost:4000";
+const Add = ({ url }) => {
   const [image, setImage] = useState(false);
   const [data, setData] = useState({
     name: "",
@@ -20,7 +20,6 @@ const Add = () => {
   };
 
   const onSubmitHandler = async (event) => {
-    console.log(image);
     event.preventDefault();
     const formData = new FormData();
     formData.append("name", data.name);
@@ -39,7 +38,9 @@ const Add = () => {
         category: "Salad",
       });
       setImage(false);
+      toast.success(response.data.message);
     } else {
+      toast.error(response.data.message);
     }
   };
 
